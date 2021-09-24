@@ -19,21 +19,39 @@ public class MainFrame {
 	
 	private Usuario[] usuarios;
 	int usuarioIndex=0;
-	private JButton nextButton;
 	
+	
+	public static MainFrame window;
+	static StatusFrame frame;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				MainFrame();
+				StatusFrame();
+			}
+			
+			public void MainFrame() {
 				try {
-					MainFrame window = new MainFrame();
+					window = new MainFrame();
 					window.frmEspmGo.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			
+			public void StatusFrame() {
+				try {
+					frame = new StatusFrame();
+					frame.setVisible(false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			
+			}
+			
 		});
 	}
 
@@ -80,9 +98,22 @@ public class MainFrame {
 		lblNewLabel_1.setBounds(39, 66, 45, 13);
 		frmEspmGo.getContentPane().add(lblNewLabel_1);
 		
+		
+		frmEspmGo.getContentPane().add(Button2());
+	}
+	
+	JButton Button2() {
+		JButton nextButton;
 		nextButton = new JButton("Next");
+		nextButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				window.frmEspmGo.setVisible(false);
+				frame.setVisible(true);
+				frame.UpdateWindow();
+			}
+		});
 		nextButton.setBounds(289, 210, 101, 21);
-		frmEspmGo.getContentPane().add(nextButton);
+		return nextButton;
 	}
 	
 	JButton Button1() {
@@ -109,5 +140,15 @@ public class MainFrame {
 		Cadastrar.setBackground(Color.RED);
 		Cadastrar.setBounds(289, 86, 101, 21);
 		return Cadastrar;
+	}
+	
+	public Usuario[] GetUsuarios() {
+		
+		return usuarios;
+		
+	
+	}
+	public Usuario GetSingleUsuario(int index) {
+		return usuarios[index];
 	}
 }
